@@ -12,6 +12,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>C12474932_Cloud_Assignment</servlet-name>
 		<url-pattern>/c12474932_cloud_assignment</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Upload</servlet-name>
+		<servlet-class>ie.dit.daly.marcus.UploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Upload</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

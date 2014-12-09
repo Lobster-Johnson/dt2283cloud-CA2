@@ -55,7 +55,7 @@ public class C12474932_Cloud_AssignmentServlet extends HttpServlet {
 			//general functions
 			writer.println("<p>Click here to view your private images</p>");
 			writer.println("<p>Click here to view public images</p>");
-			writer.println("<p>Click here to upload images</p>");
+			writer.println("<p>Click here to <a href=\"upload\">upload images</a>.</p>");
 			writer.println("<p><a href=\"" + logoutURL + "\">Sign out</a>.</p>");
 			}
 		} // end if logged in
