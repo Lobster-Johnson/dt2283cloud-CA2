@@ -1,6 +1,7 @@
 package ie.dit.daly.marcus;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,12 +12,14 @@ import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 public class ServeServlet extends HttpServlet {
-    private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    
 
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse res)
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws IOException {
             BlobKey blobKey = new BlobKey(req.getParameter("blob-key"));
-            blobstoreService.serve(blobKey, res);
+            BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+            blobstoreService.serve(blobKey, resp);
+          
         }
 }

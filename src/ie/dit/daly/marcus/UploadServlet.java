@@ -30,6 +30,7 @@ public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     DatastoreService imagestorage = DatastoreServiceFactory.getDatastoreService();
+    com.google.appengine.api.users.UserService userService = UserServiceFactory.getUserService();
  
     /*public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
@@ -57,12 +58,16 @@ public class UploadServlet extends HttpServlet {
     		}
     		else
     		{*/
-    			userEmail = myPrincipal.getName();
+    		if(userService.isUserLoggedIn())
+    		{
+    			userEmail = userService.getCurrentUser().getEmail();
+    		}
+    		
     		//}
             @SuppressWarnings("deprecation")
             Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
             BlobKey blobKey = blobs.get("myFile");
-            BlobKey blobName = blobs.get("myFileName");
+            
            
             if (blobKey == null)
             {
@@ -81,12 +86,13 @@ public class UploadServlet extends HttpServlet {
                     	privacy = "Public";
                     }
                     
-                    newimage.setProperty("name", blobName);
+                    
                     newimage.setProperty("key",blobKey);
                     newimage.setProperty("owner", userEmail);
                     newimage.setProperty("privacy", privacy);
                     imagestorage.put(newimage);
-                    resp.sendRedirect("/serve?blob-key=" + blobKey.getKeyString());
+                    //resp.sendRedirect("/serve?blob-key=" + blobKey.getKeyString());/c12474932_cloud_assignment
+                    resp.sendRedirect("/c12474932_cloud_assignment");
             }
     	/*}catch (Exception e) {
     		resp.sendRedirect("/");

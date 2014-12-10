@@ -30,7 +30,7 @@ public class C12474932_Cloud_AssignmentServlet extends HttpServlet {
 		{
 			writer.println("<p>You are not logged in at this time</p>");
 			writer.println("<p>You can <a href=\""+loginURL+ "\">sign in here if you are a registered user</a>.</p>");
-			writer.println("<p>Click here to view public images</p>");
+			writer.println("<p>Click here to view <a href=\"publicimages\">public images</a></p>");
 			permission = "guest";
 		} // end if not logged in
 		
@@ -54,7 +54,7 @@ public class C12474932_Cloud_AssignmentServlet extends HttpServlet {
 			
 			//general functions
 			writer.println("<p>Click here to view your private images</p>");
-			writer.println("<p>Click here to view public images</p>");
+			writer.println("<p>Click here to view <a href=\"publicimages\">public images</a></p>");
 			writer.println("<p>Click here to <a href=\"upload.jsp\">upload images</a></p>");
 			writer.println("<p><a href=\"" + logoutURL + "\">Sign out</a>.</p>");
 			}
