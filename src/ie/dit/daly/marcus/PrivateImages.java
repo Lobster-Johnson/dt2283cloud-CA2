@@ -18,7 +18,7 @@ import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.users.UserServiceFactory;
 
 @SuppressWarnings("serial")
-public class PublicImages extends HttpServlet{
+public class PrivateImages extends HttpServlet{
 	@SuppressWarnings("deprecation")
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
@@ -40,28 +40,23 @@ public class PublicImages extends HttpServlet{
 	    }
 	    else
 	    {
-	    	//datastore.delete(<entitykey>)
-	    	resp.getWriter().println("<form ");
+	    	
 	    	resp.getWriter().println("<table>");
 	    	for(Entity image : pq.asIterable())
 	    	{
-	    		String check1 = "Public";
+	    		String check1 = "Private";
 	    		String check2 = (String) image.getProperty("privacy");
 	    		String owner = (String) image.getProperty("owner");
-	    		if(check1.equals(check2))
+	    		if(check1.equals(check2) && userEmail.equals(owner))
 	    		{
 	    			resp.getWriter().println("<tr><td>");
 	    			String url = imagesService.getServingUrl((BlobKey) image.getProperty("key"));
 	    			url = url.concat("=s").concat(Integer.toString(75));
 	    			resp.getWriter().println("<img src=\""+url+"\"> </img>");
-	    			if(userEmail.equals(owner))
-	    			{
-	    				resp.getWriter().println("<INPUT TYPE=\"checkbox\" NAME=\"checks\" VALUE=\"Private\"> Delete");
-	    			}
+	    			resp.getWriter().println("<p>DELETE</p>");	    			
 	    			resp.getWriter().println("</td></tr>");
 	    		}
 		    }
-	    	resp.getWriter().println("<input type=\"submit\" value=\"Delete selected\">");
 	    }
 	    resp.getWriter().println("<p><a href=\"c12474932_cloud_assignment\">Return</a></p>");
 	}

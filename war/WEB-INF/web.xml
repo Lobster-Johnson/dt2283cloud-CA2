@@ -43,6 +43,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>PublicImages</servlet-name>
 		<url-pattern>/publicimages</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PrivateImages</servlet-name>
+		<servlet-class>ie.dit.daly.marcus.PrivateImages</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>PrivateImages</servlet-name>
+		<url-pattern>/privateimages</url-pattern>
+	</servlet-mapping>
   
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
