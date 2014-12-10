@@ -16,7 +16,7 @@ method="post" enctype="multipart/form-data">
 		<input type="file" name="myFile">
 		<input type="submit" value="Submit">
 		<BR>
-		<INPUT TYPE="radio" NAME="radios" VALUE="Public" CHECKED>
+		<INPUT TYPE="radio" NAME="radios" VALUE="Public">
              Public
             <BR>
             <INPUT TYPE="radio" NAME="radios" VALUE="Private">

@@ -3,6 +3,8 @@ package ie.dit.daly.marcus;
 import java.io.IOException;
 
 
+
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,16 +24,19 @@ public class PrivateImages extends HttpServlet{
 	@SuppressWarnings("deprecation")
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
+		//declare the userservice for finding user, the data storage for accessing images and image service for using those images
 		com.google.appengine.api.users.UserService userService = UserServiceFactory.getUserService();
 		DatastoreService imagestorage = DatastoreServiceFactory.getDatastoreService();
 		ImagesService imagesService = ImagesServiceFactory.getImagesService();
 		
+		//their email defaults to blank so it won't say they own any images
 		String userEmail = "";
 		if(userService.isUserLoggedIn())
 		{
 			userEmail = userService.getCurrentUser().getEmail();
 		}
 		
+		//prepare a query to return images
 		Query query = new Query("image");
 		PreparedQuery pq = imagestorage.prepare(query);
 	    
@@ -40,24 +45,34 @@ public class PrivateImages extends HttpServlet{
 	    }
 	    else
 	    {
-	    	
+	    	//start cycling through every item in the datastorage
 	    	resp.getWriter().println("<table>");
 	    	for(Entity image : pq.asIterable())
 	    	{
 	    		String check1 = "Private";
 	    		String check2 = (String) image.getProperty("privacy");
 	    		String owner = (String) image.getProperty("owner");
+	    		//it's marked as private, AND the current user owns it, print it
 	    		if(check1.equals(check2) && userEmail.equals(owner))
 	    		{
+	    			//get the url of the image
 	    			resp.getWriter().println("<tr><td>");
 	    			String url = imagesService.getServingUrl((BlobKey) image.getProperty("key"));
 	    			url = url.concat("=s").concat(Integer.toString(75));
-	    			resp.getWriter().println("<img src=\""+url+"\"> </img>");
-	    			resp.getWriter().println("<p>DELETE</p>");	    			
+	    			
+	    			//display the image and give it a link to it's full sized counterpart
+	    			BlobKey blobKey = (BlobKey) image.getProperty("key");
+	    			String keystring =  blobKey.getKeyString();
+	    			String redirect = "/serve?blob-key=" + keystring;
+	    			resp.getWriter().println("<a href =\""+redirect+"\"><img src=\""+url+"\"> </img><a>");
+	    			
+	    			//seeing as we know the owner is the one viewing it right now, give them the option to delete it
+	    			resp.getWriter().println("<input type=\"submit\" value=\"Delete Image\">");    			
 	    			resp.getWriter().println("</td></tr>");
 	    		}
 		    }
 	    }
+	  //print a message to return to the home page
 	    resp.getWriter().println("<p><a href=\"c12474932_cloud_assignment\">Return</a></p>");
 	}
 }
