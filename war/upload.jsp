@@ -15,6 +15,13 @@ method="post" enctype="multipart/form-data">
 		<input type="text" name="foo">
 		<input type="file" name="myFile">
 		<input type="submit" value="Submit">
+		<BR>
+		<INPUT TYPE="radio" NAME="radios" VALUE="Public" CHECKED>
+             Public
+            <BR>
+            <INPUT TYPE="radio" NAME="radios" VALUE="Private">
+             Private
+            <BR>
 	</form>
-</body
+</body>
 </html>
